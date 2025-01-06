@@ -1,13 +1,19 @@
 pipeline {
     agent any
-    options {
-        withBuildUser()
-    }
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 script {
-                    echo "The build was triggered by user: ${env.BUILD_USER_ID}"
+                    // Используем withBuildUser внутри блоков node
+                    withBuildUser {
+                        def user = env.BUILD_USER_ID
+                        echo "Build triggered by user: ${user}"
+                    }
                 }
             }
         }
