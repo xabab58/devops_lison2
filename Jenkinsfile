@@ -59,6 +59,7 @@ pipeline {
                         sh """
                             curl -X POST ${telegramApiUrl} -d chat_id=${chatId} -d text="${message}"
                         """
+                        echo "Сборщик: ${env.BUILD_USER_ID}"
                     }
                 }
             }
