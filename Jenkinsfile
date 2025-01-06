@@ -48,7 +48,7 @@ pipeline {
                         // ID вашего Telegram-канала (замените на свой)
                         def chatId = '-4667291640'
                         // Формируем сообщение для отправки
-                        def user = env.BUILD_USER_ID ?: 'Неизвестный пользователь'
+                        def user = env.BUILD_USER_ID ?: env.GIT_COMMITTER_NAME ?: 'Неизвестный пользователь'
 
                         def message = "Сборка приложения успешно завершена!\n" +
                                     "Имя сборки: ${env.JOB_NAME}\n" +
