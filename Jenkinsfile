@@ -40,6 +40,25 @@ pipeline {
                 archiveArtifacts(artifacts: 'backend/target/sausage-store-0.0.1-SNAPSHOT.jar')
                 archiveArtifacts(artifacts: 'frontend/dist/frontend/*')
             }
+        post {
+                success {
+                    script {
+                        // URL вашего Telegram-бота (замените на свой)
+                        def telegramApiUrl = 'https://api.telegram.org/bot5310374541:AAFJdesNVXobebUtvGbbLPJr800r256uYw4/sendMessage'
+                        // ID вашего Telegram-канала (замените на свой)
+                        def chatId = '-4667291640'
+                        // Формируем сообщение для отправки
+                        def message = "Сборка завершена успешно!\n" +
+                                      "Артефакты сохранены.\n" +
+                                      "Сборщик: ${env.BUILD_USER_ID}"
+
+                        // Отправляем запрос в Telegram
+                        sh """
+                            curl -X POST ${telegramApiUrl} -d chat_id=${chatId} -d text="${message}"
+                        """
+                    }
+                }
+            }
         }
     }
-} 
+}
